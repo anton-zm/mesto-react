@@ -61,7 +61,7 @@ function Main(props) {
       </div>
       <div className='places-list root__section'>
         {props.cards.map((item, index) => (
-          <Card title={item.name} img={item.link} likes={item.likes} key={index} id={item._id} />
+          <Card title={item.name} img={item.link} likes={item.likes} key={index} id={item._id} owner={item.owner} />
         ))}
       </div>
       <AddPlace isOpen={addPopup} onClose={PopupClosers.closeAddPopup} />

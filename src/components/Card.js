@@ -6,6 +6,7 @@ function Card(props) {
   const [isLiked, setLike] = React.useState(false);
   const [counter, setCounter] = React.useState(props.likes.length);
   const [btnDsbl, setBtnState] = React.useState(false);
+  const [deleteIcon, setDeleteIcon] = React.useState(false);
 
   React.useEffect(() => {
     props.likes.forEach((e) => {
@@ -14,14 +15,15 @@ function Card(props) {
         setBtnState(true);
       }
     });
-  }, []);
+  }, [props.likes]);
 
-  //   function disablerLike(elem) {
-  //     elem.setAttribute('disable', 'true');
-  //   }
+  React.useEffect(() => {
+    if (props.owner === USERID) {
+      setDeleteIcon(true);
+    }
+  }, [props.owner]);
 
-  function like(event) {
-    console.log('EEEEEE');
+  function like() {
     setLike(true);
     api.likeCard(props.id).then(() => {
       setCounter(props.likes.length + 1);
@@ -31,7 +33,7 @@ function Card(props) {
   return (
     <div className='place-card'>
       <div className='place-card__image' style={{ backgroundImage: `url(${props.img})` }}>
-        <button className='place-card__delete-icon'></button>
+        <button className={`place-card__delete-icon ${deleteIcon ? 'place-card_my-card' : ''}`}></button>
       </div>
       <div className='place-card__description'>
         <h3 className='place-card__name'>{props.title}</h3>
