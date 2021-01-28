@@ -8,8 +8,8 @@ function App() {
 
   React.useEffect(() => {
     api.getInitialCards().then((res) => {
-      console.log(res.slice(0, 6));
-      renderCards(res.slice(0, 6));
+      console.log(res.slice(0, 10));
+      renderCards(res.slice(0, 10));
     });
   }, []);
 

@@ -1,3 +1,5 @@
+import { KEY } from '../utils/id';
+
 class Api {
   constructor(options) {
     this.options = options;
@@ -113,7 +115,7 @@ class Api {
 const api = new Api({
   baseUrl: 'https://nomoreparties.co/cohort10',
   headers: {
-    authorization: 'd6d7615e-1844-4421-b847-6aee70eeff4e',
+    authorization: KEY,
     'Content-Type': 'application/json',
   },
 });
