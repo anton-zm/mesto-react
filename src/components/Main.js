@@ -1,10 +1,11 @@
 import AddPlace from './popups/AddPlace';
 import EditProfile from './popups/EditProfile';
 import Avatar from './popups/Avatar';
+import Card from './Card';
 import api from '../utils/api';
 import React from 'react';
 
-function Main() {
+function Main(props) {
   const [addPopup, toggleAddPopup] = React.useState(false);
   const [profilePopup, toggleProfilePopup] = React.useState(false);
   const [avaPopup, toggleAvaPopup] = React.useState(false);
@@ -17,9 +18,6 @@ function Main() {
       setUserName(res.name);
       setUserAbout(res.about);
       setUserAva(res.avatar);
-    });
-    api.getInitialCards().then((res) => {
-      console.log(res.slice(0, 20));
     });
   }, []);
 
@@ -61,7 +59,19 @@ function Main() {
           +
         </button>
       </div>
-      <div className='places-list root__section'></div>
+      <div className='places-list root__section'>
+        {props.cards.map((item, index) => (
+          <Card
+            title={item.name}
+            img={item.link}
+            likes={item.likes.length}
+            key={index}
+            onCardClick={props.onCardClick}
+            onCardLike={props.onCardLike}
+            onDeleteClick={props.onDeleteClick}
+          />
+        ))}
+      </div>
       <AddPlace isOpen={addPopup} onClose={PopupClosers.closeAddPopup} />
       <EditProfile isOpen={profilePopup} onClose={PopupClosers.closeProfilePopup} />
       <Avatar isOpen={avaPopup} onClose={PopupClosers.closeAvaPopup} />
