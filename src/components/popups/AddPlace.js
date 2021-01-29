@@ -87,7 +87,7 @@ function AddPlace(props) {
       <p className='popup__form-error' id='link-error'>
         {linkErrorText}
       </p>
-      <button type='submit' className={`button popup__button popup__button_usercard ${!submitBtnDsbl ? 'popup__button_active' : ''}`} disabled={submitBtnDsbl ? true : false}>
+      <button type='submit' className={`button popup__button  ${!submitBtnDsbl ? 'popup__button_active' : ''}`} disabled={submitBtnDsbl ? true : false}>
         +
       </button>
     </Popup>
