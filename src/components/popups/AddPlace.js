@@ -16,6 +16,7 @@ function AddPlace(props) {
   function emitAddPlace(event) {
     event.preventDefault();
     props.submitFun(img, title);
+    props.onClose();
   }
   return (
     <Popup isOpen={props.isOpen ? 'popup_is-opened' : ''} onClose={props.onClose} onSubmit={emitAddPlace} name='add-card' title='Новое место' btnText='+'>

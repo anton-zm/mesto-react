@@ -7,18 +7,15 @@ function App() {
   const [cards, renderCards] = React.useState([]);
 
   function addNewPlace(img, title) {
-    console.log('HERE!!!');
     api.addNewCard(title, img).then((res) => {
-      console.log(res);
+      renderCards([res, ...cards]);
     });
-    //https://eruditov.net/_pu/4/12980798.jpg
   }
 
   React.useEffect(() => {
     api.getInitialCards().then((res) => {
-      console.log(res.slice(-10));
-      //console.log(res);
-      renderCards(res.slice(-10));
+      //console.log(res.slice(-10));
+      renderCards(res.reverse().slice(0, 10));
     });
   }, []);
 
