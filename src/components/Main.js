@@ -64,7 +64,7 @@ function Main(props) {
           <Card title={item.name} img={item.link} likes={item.likes} key={index} id={item._id} owner={item.owner} />
         ))}
       </div>
-      <AddPlace isOpen={addPopup} onClose={PopupClosers.closeAddPopup} />
+      <AddPlace isOpen={addPopup} onClose={PopupClosers.closeAddPopup} submitFun={props.addNewPlace} />
       <EditProfile isOpen={profilePopup} onClose={PopupClosers.closeProfilePopup} />
       <Avatar isOpen={avaPopup} onClose={PopupClosers.closeAvaPopup} />
     </main>
