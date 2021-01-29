@@ -3,6 +3,8 @@ import React from 'react';
 import { ERRORS } from '../../utils/validationErrors';
 
 function EditProfile(props) {
+  const [name, setName] = React.useState('');
+  const [about, setAbout] = React.useState('');
   const [nameErrorText, setNameErrorText] = React.useState('');
   const [aboutErrorText, setAboutErrorText] = React.useState('');
   const [isNameValid, setNameValidState] = React.useState(false);
@@ -25,6 +27,14 @@ function EditProfile(props) {
       setStateSubmitButton(true);
     }
   }, [checkForm]);
+
+  function writeName(e) {
+    setName(e.target.value);
+  }
+
+  function writeAbout(e) {
+    setAbout(e.target.value);
+  }
 
   function nameValidate(event) {
     if (event.target.value.length < 2 && event.target.value) {
@@ -50,11 +60,15 @@ function EditProfile(props) {
       setAboutValidState(true);
     }
   }
+  function submit(event) {
+    event.preventDefault();
+    props.onSubmit(name, about);
+  }
   return (
-    <Popup isOpen={props.isOpen ? 'popup_is-opened' : ''} onClose={props.onClose} onSubmit={props.onSubmit} name='add-card' title='Редактировать профиль'>
-      <input onInput={nameValidate} type='text' name='user_name' className='popup__input ' placeholder='Имя' minLength='2' maxLength='30' required />
+    <Popup isOpen={props.isOpen ? 'popup_is-opened' : ''} onClose={props.onClose} onSubmit={submit} name='add-card' title='Редактировать профиль'>
+      <input onInput={nameValidate} onChange={writeName} type='text' name='user_name' className='popup__input ' placeholder='Имя' minLength='2' maxLength='30' required />
       <p className='popup__form-error'>{nameErrorText}</p>
-      <input onInput={aboutValidate} type='text' name='user_about' className='popup__input ' placeholder='О себе' minLength='2' maxLength='30' required />
+      <input onInput={aboutValidate} onChange={writeAbout} type='text' name='user_about' className='popup__input ' placeholder='О себе' minLength='2' maxLength='30' required />
       <p className='popup__form-error'>{aboutErrorText}</p>
       <button type='submit' className={`button popup__button popup__button_edit  ${!submitBtnDsbl ? 'popup__button_active' : ''}`} disabled={submitBtnDsbl ? true : false}>
         Сохранить

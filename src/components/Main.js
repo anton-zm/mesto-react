@@ -55,8 +55,12 @@ function Main(props) {
     setImgToPopup(img);
   }
 
-  function editUserProfile(event) {
-    event.preventDefault();
+  function editUserProfile(name, about) {
+    api.updateProfile(name, about).then((res) => {
+      setUserName(res.name);
+      setUserAbout(res.about);
+      toggleProfilePopup(false);
+    });
   }
 
   function editUserAvatar(link) {
