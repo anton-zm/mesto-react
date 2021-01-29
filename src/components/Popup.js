@@ -3,6 +3,10 @@ import cross from '../images/close.svg';
 function Popup(props) {
   function closePopup(event) {
     event.target.parentElement.lastElementChild.reset();
+    const forms = document.querySelectorAll('.popup__button');
+    Array.from(forms).forEach((e) => {
+      e.classList.remove('popup__button_active');
+    });
     props.onClose();
   }
   return (

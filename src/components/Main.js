@@ -55,6 +55,17 @@ function Main(props) {
     setImgToPopup(img);
   }
 
+  function editUserProfile(event) {
+    event.preventDefault();
+  }
+
+  function editUserAvatar(link) {
+    api.updateAva(link).then((ava) => {
+      setUserAva(ava.avatar);
+      toggleAvaPopup(false);
+    });
+  }
+
   return (
     <main className='profile root__section'>
       <div className='user-info'>
@@ -76,8 +87,8 @@ function Main(props) {
         ))}
       </div>
       <AddPlace isOpen={addPopup} onClose={PopupClosers.closeAddPopup} submitFun={props.addNewPlace} />
-      <EditProfile isOpen={profilePopup} onClose={PopupClosers.closeProfilePopup} />
-      <Avatar isOpen={avaPopup} onClose={PopupClosers.closeAvaPopup} />
+      <EditProfile isOpen={profilePopup} onClose={PopupClosers.closeProfilePopup} onSubmit={editUserProfile} />
+      <Avatar isOpen={avaPopup} onClose={PopupClosers.closeAvaPopup} onSubmit={editUserAvatar} />
       <ImgPopup isOpen={imagePopup} onClose={PopupClosers.closeImgPopup} img={imgInPopup} />
     </main>
   );
