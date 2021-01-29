@@ -36,9 +36,16 @@ function Card(props) {
       setLikeBtnState(true);
     });
   }
+
+  function popup(event) {
+    if (event.target.classList.contains('place-card__image')) {
+      props.Click(props.img);
+    }
+  }
+
   return (
     <div className='place-card'>
-      <div className='place-card__image' style={{ backgroundImage: `url(${props.img})` }}>
+      <div onClick={popup} className='place-card__image' style={{ backgroundImage: `url(${props.img})` }}>
         <button onClick={deleteCard} className={`place-card__delete-icon ${deleteIcon ? 'place-card_my-card' : ''}`}></button>
       </div>
       <div className='place-card__description'>

@@ -1,6 +1,7 @@
 import AddPlace from './popups/AddPlace';
 import EditProfile from './popups/EditProfile';
 import Avatar from './popups/Avatar';
+import ImgPopup from './popups/ImagePopup';
 import Card from './Card';
 import api from '../utils/api';
 import React from 'react';
@@ -12,6 +13,8 @@ function Main(props) {
   const [userName, setUserName] = React.useState('');
   const [userAbout, setUserAbout] = React.useState('');
   const [userAva, setUserAva] = React.useState('');
+  const [imagePopup, toggleImgPopup] = React.useState(false);
+  const [imgInPopup, setImgToPopup] = React.useState('');
 
   React.useEffect(() => {
     api.getUserData().then((res) => {
@@ -31,6 +34,9 @@ function Main(props) {
     closeProfilePopup() {
       toggleProfilePopup(false);
     },
+    closeImgPopup() {
+      toggleImgPopup(false);
+    },
   };
   const PopupOpeners = {
     handleEditAvatarClick() {
@@ -43,6 +49,12 @@ function Main(props) {
       toggleAddPopup(true);
     },
   };
+
+  function addImgToPopup(img) {
+    console.log(img);
+    toggleImgPopup(true);
+    setImgToPopup(img);
+  }
 
   return (
     <main className='profile root__section'>
@@ -61,12 +73,13 @@ function Main(props) {
       </div>
       <div className='places-list root__section'>
         {props.cards.map((item, index) => (
-          <Card title={item.name} img={item.link} likes={item.likes} key={index} id={item._id} owner={item.owner} />
+          <Card Click={addImgToPopup} title={item.name} img={item.link} likes={item.likes} key={index} id={item._id} owner={item.owner} />
         ))}
       </div>
       <AddPlace isOpen={addPopup} onClose={PopupClosers.closeAddPopup} submitFun={props.addNewPlace} />
       <EditProfile isOpen={profilePopup} onClose={PopupClosers.closeProfilePopup} />
       <Avatar isOpen={avaPopup} onClose={PopupClosers.closeAvaPopup} />
+      <ImgPopup isOpen={imagePopup} onClose={PopupClosers.closeImgPopup} img={imgInPopup} />
     </main>
   );
 }

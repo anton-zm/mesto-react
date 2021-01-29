@@ -19,8 +19,8 @@ function AddPlace(props) {
     props.onClose();
   }
   return (
-    <Popup isOpen={props.isOpen ? 'popup_is-opened' : ''} onClose={props.onClose} onSubmit={emitAddPlace} name='add-card' title='Новое место' btnText='+'>
-      <input onChange={writeTitle} type='text' name='name' className='popup__input popup__input_type_name' placeholder='Название' id='name' required />
+    <Popup isOpen={props.isOpen ? 'popup_is-opened' : ''} onClose={props.onClose} onSubmit={emitAddPlace} name='add-card' title='Новое место'>
+      <input onChange={writeTitle} type='text' name='name' maxLength='20' className='popup__input popup__input_type_name' placeholder='Название' id='name' required />
       <p className='popup__form-error' id='name-error'></p>
       <input onChange={writeImg} type='text' name='link' className='popup__input popup__input_type_link-url' placeholder='Ссылка на картинку' id='link' required />
       <p className='popup__form-error' id='link-error'></p>

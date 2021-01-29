@@ -14,8 +14,7 @@ function App() {
 
   React.useEffect(() => {
     api.getInitialCards().then((res) => {
-      //console.log(res.slice(-10));
-      renderCards(res.reverse().slice(0, 10));
+      renderCards(res.reverse().slice(0, 50));
     });
   }, []);
 

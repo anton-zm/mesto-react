@@ -1,9 +1,17 @@
 .popup__img-container {
-  width: 550px;
-  min-height: 78vh;
-  background-size: cover;
-  background-repeat: no-repeat;
+  min-width: 100px;
+  max-height: 80vh;
+  /* background-size: cover;
+  background-repeat: no-repeat; */
+  background-color: white;
+  border-radius: 8px;
   position: relative;
+  padding: 15px;
+}
+
+.popup__img {
+  max-width: 100%;
+  max-height: 70vh;
 }
 
 @media (max-width: 600px) {
