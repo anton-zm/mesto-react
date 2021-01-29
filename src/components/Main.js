@@ -51,7 +51,6 @@ function Main(props) {
   };
 
   function addImgToPopup(img) {
-    console.log(img);
     toggleImgPopup(true);
     setImgToPopup(img);
   }
