@@ -1,6 +1,8 @@
 import AddPlace from './popups/AddPlace';
 import EditProfile from './popups/EditProfile';
 import Avatar from './popups/Avatar';
+import LoaderInfo from './LoaderUserInfo';
+import LoaderCards from './LoaderCards';
 import ImgPopup from './popups/ImagePopup';
 import Card from './Card';
 import api from '../utils/api';
@@ -10,6 +12,8 @@ function Main(props) {
   const [addPopup, toggleAddPopup] = React.useState(false);
   const [profilePopup, toggleProfilePopup] = React.useState(false);
   const [avaPopup, toggleAvaPopup] = React.useState(false);
+  const [userInfo, setUserInfo] = React.useState(false);
+  const [userInfoLoader, setUserInfoLoader] = React.useState(true);
   const [userName, setUserName] = React.useState('');
   const [userAbout, setUserAbout] = React.useState('');
   const [userAva, setUserAva] = React.useState('');
@@ -21,6 +25,8 @@ function Main(props) {
       setUserName(res.name);
       setUserAbout(res.about);
       setUserAva(res.avatar);
+      setUserInfoLoader(false);
+      setUserInfo(true);
     });
   }, []);
 
@@ -72,7 +78,8 @@ function Main(props) {
 
   return (
     <main className='profile root__section'>
-      <div className='user-info'>
+      <LoaderInfo userinfo={userInfoLoader} />
+      <div className={`user-info ${!userInfo ? 'user-info_disabled' : ''}`}>
         <img src={userAva} alt='User avatar' onClick={PopupOpeners.handleEditAvatarClick} className='user-info__photo' />
         <div className='user-info__data'>
           <h1 className='user-info__name'>{userName}</h1>
@@ -85,6 +92,7 @@ function Main(props) {
           +
         </button>
       </div>
+      <LoaderCards cardsloader={props.cardsloader} />
       <div className='places-list root__section'>
         {props.cards.map((item, index) => (
           <Card Click={addImgToPopup} title={item.name} img={item.link} likes={item.likes} key={index} id={item._id} owner={item.owner} />
