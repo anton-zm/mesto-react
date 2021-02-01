@@ -14,13 +14,12 @@
 `Клонировать репозиторий командой git clone`
 
 Установить пакеты npm
+`npm install`
 
-Запустить необходимую сборку:
+Запустить приложение:
 
-npm run build - создает сборку Production
-
-npm run dev - создает сборку Development, запускает сервер, и открывает проект в браузере с hot обновлением
+`npm start`
 
 ### Cтек
 
-HTML, CSS (flexbox, grid, BEM), JS , Webpack, GIT
+React.js, React Create App, Hooks
