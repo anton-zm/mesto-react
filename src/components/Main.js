@@ -7,6 +7,7 @@ import ImgPopup from './popups/ImagePopup';
 import Card from './Card';
 import api from '../utils/api';
 import React from 'react';
+import { userContext } from '../contexts/userContext';
 
 function Main(props) {
   const [addPopup, toggleAddPopup] = React.useState(false);
@@ -14,17 +15,15 @@ function Main(props) {
   const [avaPopup, toggleAvaPopup] = React.useState(false);
   const [userInfo, setUserInfo] = React.useState(false);
   const [userInfoLoader, setUserInfoLoader] = React.useState(true);
-  const [userName, setUserName] = React.useState('');
-  const [userAbout, setUserAbout] = React.useState('');
   const [userAva, setUserAva] = React.useState('');
+  const [user, setUser] = React.useState('');
   const [imagePopup, toggleImgPopup] = React.useState(false);
   const [imgInPopup, setImgToPopup] = React.useState('');
 
   React.useEffect(() => {
     api.getUserData().then((res) => {
-      setUserName(res.name);
-      setUserAbout(res.about);
       setUserAva(res.avatar);
+      setUser(res);
       setUserInfoLoader(false);
       setUserInfo(true);
     });
@@ -63,8 +62,7 @@ function Main(props) {
 
   function editUserProfile(name, about) {
     api.updateProfile(name, about).then((res) => {
-      setUserName(res.name);
-      setUserAbout(res.about);
+      setUser(res);
       toggleProfilePopup(false);
     });
   }
@@ -78,30 +76,32 @@ function Main(props) {
 
   return (
     <main className='profile root__section'>
-      <LoaderInfo userinfo={userInfoLoader} />
-      <div className={`user-info ${!userInfo ? 'user-info_disabled' : ''}`}>
-        <img src={userAva} alt='User avatar' onClick={PopupOpeners.handleEditAvatarClick} className='user-info__photo' />
-        <div className='user-info__data'>
-          <h1 className='user-info__name'>{userName}</h1>
-          <p className='user-info__job'>{userAbout}</p>
-          <button onClick={PopupOpeners.handleEditProfileClick} className='user-info__edit-button'>
-            Edit
+      <userContext.Provider value={user}>
+        <LoaderInfo userinfo={userInfoLoader} />
+        <div className={`user-info ${!userInfo ? 'user-info_disabled' : ''}`}>
+          <img src={userAva} alt='User avatar' onClick={PopupOpeners.handleEditAvatarClick} className='user-info__photo' />
+          <div className='user-info__data'>
+            <h1 className='user-info__name'>{user.name}</h1>
+            <p className='user-info__job'>{user.about}</p>
+            <button onClick={PopupOpeners.handleEditProfileClick} className='user-info__edit-button'>
+              Edit
+            </button>
+          </div>
+          <button onClick={PopupOpeners.handleAddPlaceClick} className='button user-info__button'>
+            +
           </button>
         </div>
-        <button onClick={PopupOpeners.handleAddPlaceClick} className='button user-info__button'>
-          +
-        </button>
-      </div>
-      <LoaderCards cardsloader={props.cardsloader} />
-      <div className='places-list root__section'>
-        {props.cards.map((item, index) => (
-          <Card Click={addImgToPopup} title={item.name} img={item.link} likes={item.likes} key={index} id={item._id} owner={item.owner} />
-        ))}
-      </div>
-      <AddPlace isOpen={addPopup} onClose={PopupClosers.closeAddPopup} submitFun={props.addNewPlace} />
-      <EditProfile isOpen={profilePopup} onClose={PopupClosers.closeProfilePopup} onSubmit={editUserProfile} />
-      <Avatar isOpen={avaPopup} onClose={PopupClosers.closeAvaPopup} onSubmit={editUserAvatar} />
-      <ImgPopup isOpen={imagePopup} onClose={PopupClosers.closeImgPopup} img={imgInPopup} />
+        <LoaderCards cardsloader={props.cardsloader} />
+        <div className='places-list root__section'>
+          {props.cards.map((item, index) => (
+            <Card Click={addImgToPopup} title={item.name} img={item.link} likes={item.likes} key={index} id={item._id} owner={item.owner} />
+          ))}
+        </div>
+        <AddPlace isOpen={addPopup} onClose={PopupClosers.closeAddPopup} submitFun={props.addNewPlace} />
+        <EditProfile isOpen={profilePopup} onClose={PopupClosers.closeProfilePopup} onSubmit={editUserProfile} />
+        <Avatar isOpen={avaPopup} onClose={PopupClosers.closeAvaPopup} onSubmit={editUserAvatar} />
+        <ImgPopup isOpen={imagePopup} onClose={PopupClosers.closeImgPopup} img={imgInPopup} />
+      </userContext.Provider>
     </main>
   );
 }

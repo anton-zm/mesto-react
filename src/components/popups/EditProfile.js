@@ -1,16 +1,23 @@
 import Popup from '../Popup';
 import React from 'react';
 import { ERRORS } from '../../utils/validationErrors';
+import { userContext } from '../../contexts/userContext';
 
 function EditProfile(props) {
+  const User = React.useContext(userContext);
   const [name, setName] = React.useState('');
   const [about, setAbout] = React.useState('');
   const [nameErrorText, setNameErrorText] = React.useState('');
   const [aboutErrorText, setAboutErrorText] = React.useState('');
-  const [isNameValid, setNameValidState] = React.useState(false);
-  const [isAboutValid, setAboutValidState] = React.useState(false);
+  const [isNameValid, setNameValidState] = React.useState(true);
+  const [isAboutValid, setAboutValidState] = React.useState(true);
   const [checkForm, setFormState] = React.useState(false);
-  const [submitBtnDsbl, setStateSubmitButton] = React.useState(true);
+  const [submitBtnDsbl, setStateSubmitButton] = React.useState(false);
+
+  React.useEffect(() => {
+    setName(User.name);
+    setAbout(User.about);
+  }, [User]);
 
   React.useEffect(() => {
     if (isNameValid && isAboutValid) {
@@ -66,9 +73,31 @@ function EditProfile(props) {
   }
   return (
     <Popup isOpen={props.isOpen ? 'popup_is-opened' : ''} onClose={props.onClose} onSubmit={submit} name='add-card' title='Редактировать профиль'>
-      <input onInput={nameValidate} onChange={writeName} type='text' name='user_name' className='popup__input ' placeholder='Имя' minLength='2' maxLength='30' required />
+      <input
+        onInput={nameValidate}
+        onChange={writeName}
+        type='text'
+        name='user_name'
+        value={name}
+        className='popup__input'
+        placeholder='Имя'
+        minLength='2'
+        maxLength='30'
+        required
+      />
       <p className='popup__form-error'>{nameErrorText}</p>
-      <input onInput={aboutValidate} onChange={writeAbout} type='text' name='user_about' className='popup__input ' placeholder='О себе' minLength='2' maxLength='30' required />
+      <input
+        onInput={aboutValidate}
+        onChange={writeAbout}
+        type='text'
+        name='user_about'
+        value={about}
+        className='popup__input '
+        placeholder='О себе'
+        minLength='2'
+        maxLength='30'
+        required
+      />
       <p className='popup__form-error'>{aboutErrorText}</p>
       <button type='submit' className={`button popup__button popup__button_edit  ${!submitBtnDsbl ? 'popup__button_active' : ''}`} disabled={submitBtnDsbl ? true : false}>
         Сохранить
