@@ -78,7 +78,7 @@ function EditProfile(props) {
         onChange={writeName}
         type='text'
         name='user_name'
-        value={name}
+        value={name || ''}
         className='popup__input'
         placeholder='Имя'
         minLength='2'
@@ -91,7 +91,7 @@ function EditProfile(props) {
         onChange={writeAbout}
         type='text'
         name='user_about'
-        value={about}
+        value={about || ''}
         className='popup__input '
         placeholder='О себе'
         minLength='2'

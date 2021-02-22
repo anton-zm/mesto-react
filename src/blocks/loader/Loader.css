@@ -3,6 +3,9 @@
   display: flex;
   justify-content: center;
 }
+.loader__container_cards{
+  margin-top: 48px;
+}
 .loader_disabled {
   display: none;
 }
